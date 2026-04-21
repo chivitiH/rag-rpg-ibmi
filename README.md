@@ -123,3 +123,11 @@ Yoni
 Machine Learning Engineer (certified)  
 GitHub: https://github.com/chivitiH
 
+
+## ⚠️ Data
+
+PDF files are not included.  
+Add your own documents in the `data/` folder and run:
+
+python ingest.py
+
