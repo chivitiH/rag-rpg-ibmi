@@ -1,6 +1,6 @@
 # 🧠 RAG IBM i RPG Assistant (Local LLM)
 
-A Retrieval-Augmented Generation (RAG) system for querying IBM i RPG documentation using a local LLM (Ollama + GPT-OSS-20B).
+A Retrieval-Augmented Generation (RAG) system to query IBM i RPG documentation using a local LLM (Ollama + GPT-OSS-20B).
 
 ---
 
@@ -10,7 +10,7 @@ A Retrieval-Augmented Generation (RAG) system for querying IBM i RPG documentati
 - 🧠 Semantic search with FAISS
 - ⚡ GPU embeddings (SentenceTransformers)
 - 🤖 Local LLM (Ollama – GPT-OSS-20B)
-- 🔍 Context-based answers (no hallucinations mode)
+- 🔍 Context-grounded answers
 - 📚 Source attribution
 
 ---
@@ -23,70 +23,42 @@ PDF → Chunking → Embeddings → FAISS → Retrieval → LLM → Answer
 
 ## 🧪 Example
 
-**Question:**
-> How are variables declared in RPG free format?
+**Question**
+How are variables declared in RPG IV free format?
 
-**Answer:**
-- Explanation based on documentation
-- RPG code example
-- Sources from PDFs
+**Answer (generated)**
+- Explanation based on retrieved documents  
+- RPG code example  
+- References to source PDFs  
 
 ---
 
 ## ⚙️ Setup
 
-### 1. Clone repo
+git clone https://github.com/chivitiH/rag-rpg-ibmi.git  
+cd rag-rpg-ibmi  
 
-git clone https://github.com/chivitiH/rag-rpg-ibmi.git
-cd rag-rpg-ibmi
+python -m venv venv  
+source venv/bin/activate  
 
----
+pip install -r requirements.txt  
 
-### 2. Create environment
+curl -fsSL https://ollama.com/install.sh | sh  
+ollama pull gpt-oss:20b  
 
-python -m venv venv
-source venv/bin/activate
-
----
-
-### 3. Install dependencies
-
-pip install -r requirements.txt
-
----
-
-### 4. Install Ollama
-
-curl -fsSL https://ollama.com/install.sh | sh
-
----
-
-### 5. Download model
-
-ollama pull gpt-oss:20b
-
----
-
-### 6. Run ingestion
-
-python ingest.py
-
----
-
-### 7. Run RAG
-
-python rag.py
+python ingest.py  
+python rag.py  
 
 ---
 
 ## 📁 Project Structure
 
-rag-rpg-ibmi/
+rag-rpg-ibmi/  
 
-├── data/           # PDF documents  
-├── db/             # FAISS vector database  
-├── ingest.py       # Document processing  
-├── rag.py          # RAG pipeline  
+├── data/           # Your PDFs (not included)  
+├── db/             # Vector database (generated)  
+├── ingest.py       # PDF → embeddings → FAISS  
+├── rag.py          # Retrieval + LLM  
 ├── requirements.txt  
 └── README.md  
 
@@ -94,40 +66,35 @@ rag-rpg-ibmi/
 
 ## 🧠 Technical Highlights
 
-- Local-first AI (no API required)
-- GPU acceleration (embeddings)
-- Retrieval-based accuracy
-- Modular architecture
+- Fully local RAG pipeline (no API required)  
+- FAISS vector search  
+- Transformer embeddings (sentence-transformers)  
+- LLM integration via Ollama  
+- Clean modular design  
 
 ---
 
-## ⚠️ Limitations
+## ⚠️ Data
 
-- Depends on document quality
-- Local LLM less accurate than GPT-4
-- Requires GPU for best performance
+PDF files are not included.  
+
+Add your own documents in `data/` and run:
+
+python ingest.py  
 
 ---
 
-## 🎯 Use Case
+## 🎯 Use Cases
 
-- IBM i / RPG developers
-- Legacy system documentation search
-- Code assistance from internal docs
+- IBM i / RPG developers  
+- Legacy documentation search  
+- Code assistance from internal knowledge base  
 
 ---
 
 ## 👤 Author
 
 Yoni  
-Machine Learning Engineer (certified)  
-GitHub: https://github.com/chivitiH
-
-
-## ⚠️ Data
-
-PDF files are not included.  
-Add your own documents in the `data/` folder and run:
-
-python ingest.py
+Machine Learning Engineer  
+https://github.com/chivitiH  
 
